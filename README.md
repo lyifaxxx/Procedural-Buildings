@@ -1,54 +1,81 @@
 # CIS 5660 HW03 Procedural Buildings
 
+<p float="center">
+ <img src="/asset/cover.gif" width="55%" />
+</p>
+
+https://github.com/user-attachments/assets/1b8dd8a9-1b7a-470c-abf8-b0b151a99bb7
+
+
+
 ## Project Overview
-In this homework you’ll gain more experience with tool creation and loops. The core of this homework will be following a Procedural House tutorial to create a multi-floor building generator. The tutorial is linked here: 
-https://www.youtube.com/watch?v=uIe97023sDk&t=979s&ab_channel=SimonHoudini 
+This is a Houdini procudural building project that gives artists controls over the building shape attributes as well as asset attributes.
 
-## Part 0: Setup and Planning 
-### SideFX Labs 
-The tutorial requires some nodes from SideFX Labs. If you haven’t already installed it, you can do so at the “Labs/Packages” tab of the Houdini Launcher.  
+All the assets are created inside Houdini.
 
-### Project Planning
-Before you begin on this project, skim through the tutorial and then pick a building type/style you’d like to emulate (either from photos or concept art). You should watch the entirety of the tutorial  before committing to a style so you can pick something that is manageable and will be achievable using the techniques in the tutorial.  
-Of course, you’re welcome to adapt the setup to support additional logic/features to match your style, and particularly complex additions could merit extra credit :) On the other hand, if you’re newer to Houdini and want to stick relatively close to the tutorial, that’s okay too. Just be sure to think through what changes your chosen buildings will require (additional assets? different placement logic?) before diving into the project so you don’t bite off more than you can chew.  
-Make sure the include the reference you select in your README, and don’t forget to credit your sources.  
-Here are a few examples of possible building styles that could be a decent fit for inspiration:
-CIS 5660 HW03 Procedural Building 1 
-https://www.behance.net/gallery/23773965/ISOBuilding-concept-art 
+## Observe the Reference Photo
+The building style I want to replicate is traditional Yemen architect. I found them very procedural and I really like the decoration patterns on the wall :)
 
-https://polycount.com/discussio 
-low-poly-building
-https://www.artstation.com/artwork/m6xYy 
 
-## Part 1: Box Stacking HDA
-First, start by following the tutorial to make a simple HDA that stacks boxes on each other.  Important note about HDA creation:  
-Creating an HDA saves a .hda file at the location you specify with the definition of your HDA. Be sure to submit this .hda file along with your .hip file so we can see the contents of your tool.  
-Alternatively, when you save your HDA you can choose the “Embedded in HIP File” option (rather than specifying the path), and the hda definition will be automatically embedded in your hip file (and no additional files will be needed with submission).  
+<p float="center">
+ <img src="https://github.com/user-attachments/assets/140ef000-9f15-4bfa-8d52-a99063e450a6" width="25%" />
+ <img src="https://github.com/user-attachments/assets/29d475e9-e0d4-4a0d-96ea-cf8834421bbf" width="45%" />
+  <img src="https://github.com/user-attachments/assets/ce0ea8da-7d41-4187-802f-b5ee410e7359" width="25%" />
+</p>
 
-## Part 2: Add Details
-Next, Simon adds details to the boxes to create floors by refiing the shape and adding details like windows, doors, and balconies.  
-Create your own models for windows, doors, and balconies based on your chosen style using Houdini. For each of the three types, create a Null “control” node with parameters that affect your window/door/balcony output (similar to how we made a control node for the jellyfish).  
-You should have parameters to drive the width and height of the doors, windows, and balconies, as well as at least one other parameter of your choosing on each one (ex: double vs single doors, windows with and without shutters, and type of balcony railing). Apart from that, you can go as simple or complex as you like!  
-Then follow Simon’s setup to integrate your windows, doors, and balconies into your buildings.  
-CIS 5660 HW03 Procedural Building 2 
+Take a close look at the real photos, we will have the following core features:
 
-## Part 3: Pillars and Border
-Continue following the tutorial to add pillars and borders to each floor. 
+1. Two-layer windows. A round shape + a square shape
+2. No two-layer windows for the first floor, only small windows.
+3. Decoration strips between each floor.
+4. Special shape and extended flagpole on the roof.
 
-## Part 4: Supports
-Continue following the tutorial to add supports to floors that overhang other floors.  
-(Optional) Extra Credit 
-Throughout the tutorial, Simon mentions ways you could extend his project setup. Implement any of his suggestions: 
-More complex logic for creating supports (handle different length supports differently) Add more parameters to the user interface (for example, x and z offset options) UV and shade your models 
-Add a “manual node” where users can control detail placement manually 
-Add additional types of feature models (like fire escapes or chimneys). Note that, depending on what you choose, you might need to add new logic to integrate them into your building (ex: chimneys go on top instead of being chained on the side, fire escapes should be on one side of the building and go all the way down). We’ll award more extra credit accordingly.  
-Add some flair to your scene by dressing together multiple buildings or additional procedural props or background elements 
-Render your scene 
+## Features
+### Assets
+I made four assets: two-layer large window, small window, door and balcony. Beside from balcony that match size with the door, other three types of assets have their individual controls.
 
-## Submission
-Update your README with 
-A description of your project 
-A video of your building tool in action 
-Create a pull request to this repository 
-Submit your Houdini file to Canvas along with a link to your pull request 
-IMPORTANT NOTE: make sure your HDA is either embedded in the HIP file or included with your submission (see the instructions under “Part 1: Box Stacking HDA” for additional details).
+![image](https://github.com/user-attachments/assets/295f8b0b-d0a7-43d0-85ab-64bba1f3d0d7)
+
+You can toogle the attribute of each asset in the round green control button.
+
+---
+
+#### Large Windows
+![image](https://github.com/user-attachments/assets/0f2ef119-cd50-4db6-a6ce-74167b7ebf06)
+
+You can change the divide numbers for the window frames and also the overall width and height to the entire window.
+
+
+
+
+The node network for large windows:
+
+<p float="center">
+ <img src="https://github.com/user-attachments/assets/41c5e455-0c1d-4e4d-8aa0-021abf35948b" width="55%" />
+</p>
+
+#### Small Windows
+I provided the user with two types of small windows: around and square. For each floor, user can select which type they want to use.
+
+#### Doors and balcony
+The door will automatically change to a double door if its width is larger than some threshold. This threshold can be set manuually. 
+
+### Rules and logic
+#### First Floor
+Only door and small windows will show up in the first floor. 
+
+
+#### Roof
+Add some distinguish shapes around the roof border. Also randomly add some flagpoles.
+
+
+#### Border and Support
+Instead of adding both up and down borders for each floor, I only add the upper one because I may later on add the decoration pattern to it so I don't want the upper and bottom border to overlap with each other. The support will appear when the width of the higher floor exceeds the lower floor. User can adjust the border width/height and thickness of the support.
+
+
+## What's next
+There are still many improvements to do for this project, naming a few:
+- Use Substance Designer/painter to produce the procedural patterns of decorations on the wall
+- UVs
+- Better shapes for assets
+- ...
